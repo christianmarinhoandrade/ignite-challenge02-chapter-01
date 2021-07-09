@@ -1,8 +1,12 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const { WebpackOpenBrowser } = require('webpack-open-browser')
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
+
+const port = 8080
+const url = 'http://localhost:' + port
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
@@ -23,7 +27,8 @@ module.exports = {
     isDevelopment && new ReactRefreshWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public', 'index.html')
-    })
+    }),
+    new WebpackOpenBrowser({ url, browser: 'chrome' }),
   ].filter(Boolean),
   module: {
     rules: [
